@@ -5,9 +5,7 @@ function convertNumberToString(number, x) {
 	while (integer > 0) {
 		string1 = (integer % x) + string1;
 		integer = Math.floor(integer / x);
-		// console.log(integer);
 	}
-	// console.log(string1);
 	let string2 = '';
 	fraction = fraction * x;
 	while (fraction > 0) {
