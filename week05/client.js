@@ -14,7 +14,7 @@ const client = net.createConnection({port: 8088, host: '127.0.0.1'}, () => {
 		}
 	});
 	req.send().then(data => {
-		// console.log(data);
+		console.log(data);
 	});
 	console.log('conn to server');
 });
@@ -137,7 +137,13 @@ class ResponseParser {
 	}
 
 	get res() {
-		return this.statusLine.match()
+		this.statusLine.match(/HTTP\/1.1 ([0-9]+) ([\s\S]+)/)
+		return {
+			statusCode: RegExp.$1,
+			statusText: RegExp.$2,
+			headers: this.headers,
+			body: this.bodyParser.content.join("")
+		}
 	}
 
 	receive(str) {
@@ -223,7 +229,7 @@ class TrunckedBodyParser {
 				this.current = this.WAITING_LENGTH_END;
 				if (this.length === 0) {
 					this.isFinished = true;
-					console.log(this.content);
+					// console.log(this.content);
 				}
 			} else {
 				this.length *= 10;
